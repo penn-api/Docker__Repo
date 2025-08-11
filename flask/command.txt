@@ -1,0 +1,10 @@
+docker run -d --name db --env-file .env_db --network secure-network mysql
+docker inspect mysql
+ls
+docker build -t two-tier-app .
+docker ps
+cat app.py
+cat .env_db
+docker images
+docker run -d --name two-tier-app -p 5000:5000 --network secure-network two-tier-app
+history | tail -n 20 | awk '{$1="";sub(/^ /,"");print}' > command.txt
