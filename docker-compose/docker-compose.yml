@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  mysql:
+    container_name: db
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "contain"
+      MYSQL_USER: "subh"
+      MYSQL_PASSWORD: "1234"
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+     - secure-network
+    restart: always
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-h","localhost","-usubh","-p1234"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+  flask:
+    container_name: app
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "contain"
+      MYSQL_USER: "subh"
+      MYSQL_PASSWORD: "1234"
+    networks:
+      - secure-network
+    depends_on: 
+      - mysql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL",curl -f http://localhost:5000/","exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+volumes:
+  mysql-data:
+networks:
+  secure-network:
+      
