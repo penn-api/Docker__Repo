@@ -1,0 +1,23 @@
+                 ┌───────────────────────────┐
+                 │   Stage 1: Builder        │
+                 │   FROM python:3.12        │  (1.1GB base)
+                 │   - Copy requirements.txt │
+                 │   - pip install deps → /deps
+                 └───────────┬───────────────┘
+                             │
+            COPY --from=builder /deps  (only deps copied)
+                             │
+                 ┌───────────▼───────────────┐
+                 │   Stage 2: Runtime        │
+                 │   FROM python:3.12-slim   │  (119MB base)
+                 │   - Copy deps from Stage 1│
+                 │   - Copy app.py, code     │
+                 │   - EXPOSE 5000           │
+                 │   - CMD python app.py     │
+                 └───────────┬───────────────┘
+                             │
+                             ▼
+                 ┌───────────────────────────┐
+                 │ Final Image (~150–200MB)  │
+                 │ Small + secure + deploy   │
+                 └───────────────────────────┘

@@ -1,0 +1,20 @@
+  948  docker ps
+  949  docker ps -a
+  950  docker logs eb849249e901
+  951  docker compose version
+  952  docker-compose version
+  953  docker-compose down -v --remove-orphans
+  954  docker image prune -f
+  955  docker-compose build --no-cache
+  956  docker-compose up -d
+  957  docker ps
+  958  docker ps -a
+  959  docker logs 928d
+  960  history | tail -n 20
+  961  docker-compose down -v --remove-orphans
+  962  docker image prune -f
+  963  docker-compose build --no-cache
+  964  docker-compose up -d
+  965  docker ps 
+  966  history | tail -n 20
+  967  history | tail -n 20 > command.txt
